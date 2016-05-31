@@ -28,36 +28,34 @@ import javax.persistence.Temporal;
  */
 @Entity
 @Table(name = "RESERVACION")
-public class Reservacion implements Serializable{
-    
+public class Reservacion implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="codigo_r")
+    @Column(name = "codigo_r")
     private Integer id;
-     
-     @Column(name = "fecha_entrada_r")
-     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-     private Date fecha_entrada;
-     
-     @Column(name = "fecha_salida_r")
-     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-     private Date fecha_salida;
-     
+
+    @Column(name = "fecha_entrada_r")
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date fecha_entrada;
+
+    @Column(name = "fecha_salida_r")
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date fecha_salida;
+
     @Column(name = "timestamp_r")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date timestamp;
-    
+
     @Column(name = "descuento_r")
     private BigDecimal descuento;
-    
-    
-     @OneToMany
-    (mappedBy = "RESERVACION", targetEntity = HabitacionReserva.class,
+
+    @OneToMany(mappedBy = "reservacion", targetEntity = HabitacionReserva.class,
             fetch = FetchType.EAGER)
     List<HabitacionReserva> habitacion_reservas;
-    
+
     @ManyToOne
-    @JoinColumn(name = "CODIGO_C", nullable = false,insertable = false,updatable = false)
+    @JoinColumn(name = "CODIGO_C", nullable = false, insertable = false, updatable = false)
     private Cliente cliente;
 
     public Reservacion() {
@@ -118,7 +116,6 @@ public class Reservacion implements Serializable{
     public void setDescuento(BigDecimal descuento) {
         this.descuento = descuento;
     }
-    
 
     @Override
     public int hashCode() {
@@ -150,6 +147,4 @@ public class Reservacion implements Serializable{
         return "Reservacion{" + "id=" + id + ", fecha_entrada=" + fecha_entrada + ", fecha_salida=" + fecha_salida + ", timestamp=" + timestamp + ", descuento=" + descuento + ", habitacion_reservas=" + habitacion_reservas + ", cliente=" + cliente + '}';
     }
 
-    
-     
 }

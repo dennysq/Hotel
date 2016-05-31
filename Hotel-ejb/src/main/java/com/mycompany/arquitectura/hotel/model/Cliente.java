@@ -41,7 +41,7 @@ public class Cliente implements Serializable{
     private String num_tarjeta;
     
     @OneToMany
-        (mappedBy = "CLIENTE", targetEntity = Reservacion.class,
+        (mappedBy = "cliente", targetEntity = Reservacion.class,
             fetch = FetchType.EAGER)
     List<Reservacion> reservaciones;
 
