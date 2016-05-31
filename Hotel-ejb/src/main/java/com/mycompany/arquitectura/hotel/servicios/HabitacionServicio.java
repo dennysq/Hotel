@@ -107,14 +107,15 @@ public class HabitacionServicio {
     
     public List<RespDisponibilidad> ConsultaDisponibilidadDeHabitaciones(Date f_entrada, Date f_salida,Integer tot_persona, Boolean desayuno){
         List<RespDisponibilidad> listResp = new ArrayList();
-        List<Habitacion> habitaciones;
+        List<Habitacion> habitaciones = new ArrayList();
         habitaciones = this.obtenerHabitacionesSinReservaPorFecha(f_entrada, f_salida); //Habitaciones limitadas a la fecha disponible
         habitaciones = this.obtenerHabitacionesPorNumPersonas(habitaciones, tot_persona);//Habitaciones con fecha disponible por el número de personas
         for(int i=0;i<habitaciones.size();i++){
             listResp.add(new RespDisponibilidad(habitaciones.get(i).getId(),this.calculoPrecios(habitaciones.get(i).getTipo(),f_entrada ,f_salida,tot_persona,desayuno),habitaciones.get(i).getTipo()));
+            
         }
         
-        List<HabitacionReserva> reservasHabitaciones = this.habitacionReservaDAO.findAll();     
+        //List<HabitacionReserva> reservasHabitaciones = this.habitacionReservaDAO.findAll();     
         
         return listResp;
     }

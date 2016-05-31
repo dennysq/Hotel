@@ -6,16 +6,16 @@
 package com.mycompany.arquitectura.hotel.util;
 
 import java.math.BigDecimal;
-import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
+//import javax.ejb.LocalBean;
+//import javax.ejb.Stateless;
 
 /**
  *
  * @author LENOVO
  */
 
-@LocalBean
-@Stateless
+//@LocalBean
+//@Stateless
 public class RespDisponibilidad {
     
      private Integer codigo;
