@@ -33,16 +33,16 @@ public class HabitacionReserva implements Serializable{
     
     @Column(name = "servicio_desayuno")
     private Boolean servicio_desayuno;
-    
+        
     @Column(name = "precio_total")
     private BigDecimal precio_total;
     
     
-     @ManyToOne
+    @ManyToOne
     @JoinColumn(name = "codigo_hab", nullable = false,insertable = false,updatable = false)
     private Habitacion habitacion;
      
-      @ManyToOne
+    @ManyToOne
     @JoinColumn(name = "codigo_r", nullable = false,insertable = false,updatable = false)
     private Reservacion reservacion;
 

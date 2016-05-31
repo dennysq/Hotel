@@ -31,7 +31,7 @@ public class Cliente implements Serializable{
     @Column(name = "codigo_c")
     Integer id;
     
-    @Column(name = "idenitificacion_c")
+    @Column(name = "identificacion_c")
     private String identificacion;
     
     @Column(name = "nombres_c")
@@ -43,17 +43,27 @@ public class Cliente implements Serializable{
     @OneToMany
         (mappedBy = "CLIENTE", targetEntity = Reservacion.class,
             fetch = FetchType.EAGER)
-    List<Reservacion> reservacion;
+    List<Reservacion> reservaciones;
 
     public Cliente() {
     }
 
-    public Cliente(Integer id, String identificacion, String nombres, String num_tarjeta, List<Reservacion> reservacion) {
+    public Cliente(Integer id, String identificacion, String nombres, String num_tarjeta, List<Reservacion> reservaciones) {
         this.id = id;
         this.identificacion = identificacion;
         this.nombres = nombres;
         this.num_tarjeta = num_tarjeta;
-        this.reservacion = reservacion;
+        this.reservaciones = reservaciones;
+    }
+    
+    
+
+    public List<Reservacion> getReservaciones() {
+        return reservaciones;
+    }
+
+    public void setReservaciones(List<Reservacion> reservaciones) {
+        this.reservaciones = reservaciones;
     }
 
     public Integer getId() {
@@ -88,14 +98,6 @@ public class Cliente implements Serializable{
         this.num_tarjeta = num_tarjeta;
     }
 
-    public List<Reservacion> getReservacion() {
-        return reservacion;
-    }
-
-    public void setReservacion(List<Reservacion> reservacion) {
-        this.reservacion = reservacion;
-    }
-
     @Override
     public int hashCode() {
         int hash = 3;
@@ -121,12 +123,11 @@ public class Cliente implements Serializable{
         return true;
     }
 
-   
-
     @Override
     public String toString() {
-        return "Cliente{" + "id=" + id + ", identificacion=" + identificacion + ", nombres=" + nombres + ", num_tarjeta=" + num_tarjeta + ", reservacion=" + reservacion + '}';
+        return "Cliente{" + "id=" + id + ", identificacion=" + identificacion + ", nombres=" + nombres + ", num_tarjeta=" + num_tarjeta + ", reservaciones=" + reservaciones + '}';
     }
+
     
     
 }

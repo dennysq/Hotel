@@ -31,13 +31,13 @@ public class Habitacion implements Serializable{
     @Column(name ="codigo_hab")
     private Integer id;
     
-    @Column(name = "numero_hab")
-    private String numero;
-    
     @Column(name = "tipo_hab")
     private String tipo;
     
-    @Column(name = "CANT_PERSONAS")
+    @Column(name = "num_hab")
+    private String numero;    
+    
+    @Column(name = "cant_personas")
     private Integer num_personas;
     
     @OneToMany

@@ -14,8 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -49,11 +47,6 @@ public class Tarifa implements Serializable{
     
     @Column(name = "tipo")
     private String tipo_habitacion;
-    
-        
-    @ManyToOne
-    @JoinColumn(name = "codigo_hab", nullable = false,insertable = false,updatable = false)
-    private Habitacion habitacion;
 
     public Tarifa() {
     }
@@ -90,14 +83,6 @@ public class Tarifa implements Serializable{
 
     public void setCosto(BigDecimal costo) {
         this.costo = costo;
-    }
-
-    public Habitacion getHabitacion() {
-        return habitacion;
-    }
-
-    public void setHabitacion(Habitacion habitacion) {
-        this.habitacion = habitacion;
     }
 
     public String getTipo_habitacion() {
@@ -146,10 +131,11 @@ public class Tarifa implements Serializable{
 
     @Override
     public String toString() {
-        return "Tarifa{" + "id=" + id + ", fecha_inicio=" + fecha_inicio + ", fecha_fin=" + fecha_fin + ", costo=" + costo + ", costo_desayuno=" + costo_desayuno + ", tipo_habitacion=" + tipo_habitacion + ", habitacion=" + habitacion + '}';
+        return "Tarifa{" + "id=" + id + ", fecha_inicio=" + fecha_inicio + ", fecha_fin=" + fecha_fin + ", costo=" + costo + ", costo_desayuno=" + costo_desayuno + ", tipo_habitacion=" + tipo_habitacion + '}';
     }
     
     
+
 
 
 }
