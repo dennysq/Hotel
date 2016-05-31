@@ -14,8 +14,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -36,21 +34,11 @@ public class Habitacion implements Serializable{
     @Column(name = "numero_hab")
     private String numero;
     
-    @Column(name = "camas_hab")
-    private Integer camas;
-    
     @Column(name = "tipo_hab")
     private String tipo;
     
-    @ManyToOne
-    @JoinColumn(name = "CODIGO_H", nullable = false,insertable = false,updatable = false)
-    private Hotel hotel;
-    
-    
-    @OneToMany
-    (mappedBy = "habitacion", targetEntity = Tarifa.class,
-            fetch = FetchType.EAGER)
-    List<Tarifa> tarifas;
+    @Column(name = "CANT_PERSONAS")
+    private Integer num_personas;
     
     @OneToMany
     (mappedBy = "habitacion", targetEntity = HabitacionReserva.class,
@@ -76,14 +64,6 @@ public class Habitacion implements Serializable{
         this.numero = numero;
     }
 
-    public Integer getCamas() {
-        return camas;
-    }
-
-    public void setCamas(Integer camas) {
-        this.camas = camas;
-    }
-
     public String getTipo() {
         return tipo;
     }
@@ -92,20 +72,12 @@ public class Habitacion implements Serializable{
         this.tipo = tipo;
     }
 
-    public Hotel getHotel() {
-        return hotel;
+    public Integer getNum_personas() {
+        return num_personas;
     }
 
-    public void setHotel(Hotel hotel) {
-        this.hotel = hotel;
-    }
-
-    public List<Tarifa> getTarifas() {
-        return tarifas;
-    }
-
-    public void setTarifas(List<Tarifa> tarifas) {
-        this.tarifas = tarifas;
+    public void setNum_personas(Integer num_personas) {
+        this.num_personas = num_personas;
     }
 
     public List<HabitacionReserva> getHabitacion_reservas() {
@@ -118,8 +90,8 @@ public class Habitacion implements Serializable{
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + Objects.hashCode(this.id);
+        int hash = 7;
+        hash = 47 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -140,15 +112,14 @@ public class Habitacion implements Serializable{
         }
         return true;
     }
-    
 
     @Override
     public String toString() {
-        return "Habitacion{" + "id=" + id + ", numero=" + numero + ", camas=" + camas + ", tipo=" + tipo + ", hotel=" + hotel + ", tarifas=" + tarifas + ", hab_reserva=" + habitacion_reservas + '}';
+        return "Habitacion{" + "id=" + id + ", numero=" + numero + ", tipo=" + tipo + ", num_personas=" + num_personas + ", habitacion_reservas=" + habitacion_reservas + '}';
     }
-    
-    
-    
+
+   
+
     
     
 }

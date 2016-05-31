@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -33,26 +34,30 @@ public class Tarifa implements Serializable{
     private Integer id;
     
     @Column(name = "fecha_inicio")
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date fecha_inicio;
     
     @Column(name = "fecha_fin")
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date fecha_fin;
     
     @Column(name = "costo")
     private BigDecimal costo;
+    
+    @Column(name = "costo_desayuno")
+    private BigDecimal costo_desayuno;
+    
+    @Column(name = "tipo")
+    private String tipo_habitacion;
     
         
     @ManyToOne
     @JoinColumn(name = "codigo_hab", nullable = false,insertable = false,updatable = false)
     private Habitacion habitacion;
 
-    public Tarifa(Integer id, Date fecha_inicio, Date fecha_fin, BigDecimal costo, Habitacion habitacion) {
-        this.id = id;
-        this.fecha_inicio = fecha_inicio;
-        this.fecha_fin = fecha_fin;
-        this.costo = costo;
-        this.habitacion = habitacion;
+    public Tarifa() {
     }
+    
     
     
     public Integer getId() {
@@ -95,10 +100,28 @@ public class Tarifa implements Serializable{
         this.habitacion = habitacion;
     }
 
+    public String getTipo_habitacion() {
+        return tipo_habitacion;
+    }
+
+    public void setTipo_habitacion(String tipo_habitacion) {
+        this.tipo_habitacion = tipo_habitacion;
+    }
+
+    public BigDecimal getCosto_desayuno() {
+        return costo_desayuno;
+    }
+
+    public void setCosto_desayuno(BigDecimal costo_desayuno) {
+        this.costo_desayuno = costo_desayuno;
+    }
+    
+    
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 23 * hash + Objects.hashCode(this.id);
+        int hash = 3;
+        hash = 67 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -113,6 +136,7 @@ public class Tarifa implements Serializable{
         if (getClass() != obj.getClass()) {
             return false;
         }
+        
         final Tarifa other = (Tarifa) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
@@ -120,13 +144,12 @@ public class Tarifa implements Serializable{
         return true;
     }
 
-    
-    
-    
     @Override
     public String toString() {
-        return "Tarifa{" + "id=" + id + ", fecha_inicio=" + fecha_inicio + ", fecha_fin=" + fecha_fin + ", costo=" + costo + ", habitacion=" + habitacion + '}';
+        return "Tarifa{" + "id=" + id + ", fecha_inicio=" + fecha_inicio + ", fecha_fin=" + fecha_fin + ", costo=" + costo + ", costo_desayuno=" + costo_desayuno + ", tipo_habitacion=" + tipo_habitacion + ", habitacion=" + habitacion + '}';
     }
     
     
+
+
 }

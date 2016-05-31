@@ -45,6 +45,9 @@ public class Cliente implements Serializable{
             fetch = FetchType.EAGER)
     List<Reservacion> reservacion;
 
+    public Cliente() {
+    }
+
     public Cliente(Integer id, String identificacion, String nombres, String num_tarjeta, List<Reservacion> reservacion) {
         this.id = id;
         this.identificacion = identificacion;
@@ -95,8 +98,8 @@ public class Cliente implements Serializable{
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.id);
+        int hash = 3;
+        hash = 71 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -117,6 +120,8 @@ public class Cliente implements Serializable{
         }
         return true;
     }
+
+   
 
     @Override
     public String toString() {

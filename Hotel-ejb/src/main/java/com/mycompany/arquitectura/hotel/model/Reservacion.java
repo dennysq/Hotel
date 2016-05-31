@@ -36,17 +36,19 @@ public class Reservacion implements Serializable{
     private Integer id;
      
      @Column(name = "fecha_entrada_r")
+     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
      private Date fecha_entrada;
      
      @Column(name = "fecha_salida_r")
+     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
      private Date fecha_salida;
-     
-     @Column(name = "precio_r")
-     private BigDecimal precio_r;
      
     @Column(name = "timestamp_r")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date timestamp;
+    
+    @Column(name = "descuento_r")
+    private BigDecimal descuento;
     
     
      @OneToMany
@@ -55,7 +57,7 @@ public class Reservacion implements Serializable{
     List<HabitacionReserva> habitacion_reservas;
     
     @ManyToOne
-    @JoinColumn(name = "CODIGO_R", nullable = false,insertable = false,updatable = false)
+    @JoinColumn(name = "CODIGO_C", nullable = false,insertable = false,updatable = false)
     private Cliente cliente;
 
     public Reservacion() {
@@ -85,14 +87,6 @@ public class Reservacion implements Serializable{
         this.fecha_salida = fecha_salida;
     }
 
-    public BigDecimal getPrecio_r() {
-        return precio_r;
-    }
-
-    public void setPrecio_r(BigDecimal precio_r) {
-        this.precio_r = precio_r;
-    }
-
     public Date getTimestamp() {
         return timestamp;
     }
@@ -117,9 +111,18 @@ public class Reservacion implements Serializable{
         this.cliente = cliente;
     }
 
+    public BigDecimal getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(BigDecimal descuento) {
+        this.descuento = descuento;
+    }
+    
+
     @Override
     public int hashCode() {
-        int hash = 7;
+        int hash = 5;
         hash = 53 * hash + Objects.hashCode(this.id);
         return hash;
     }
@@ -144,9 +147,9 @@ public class Reservacion implements Serializable{
 
     @Override
     public String toString() {
-        return "Reservacion{" + "id=" + id + ", fecha_entrada=" + fecha_entrada + ", fecha_salida=" + fecha_salida + ", precio_r=" + precio_r + ", timestamp=" + timestamp + ", habitacion_reservas=" + habitacion_reservas + ", cliente=" + cliente + '}';
+        return "Reservacion{" + "id=" + id + ", fecha_entrada=" + fecha_entrada + ", fecha_salida=" + fecha_salida + ", timestamp=" + timestamp + ", descuento=" + descuento + ", habitacion_reservas=" + habitacion_reservas + ", cliente=" + cliente + '}';
     }
-    
+
     
      
 }
