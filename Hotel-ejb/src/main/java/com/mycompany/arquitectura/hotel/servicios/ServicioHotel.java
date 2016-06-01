@@ -47,25 +47,25 @@ public class ServicioHotel {
      //CÁLCULO DE PRECIOS SEGÚN DESAYUNO Y HABITACION
     public BigDecimal calculoPrecios(String tipo, Date f_entrada, Date f_salida,Integer tot_persona, Boolean desayuno){
         final long MILLSECS_PER_DAY = 24 * 60 * 60 * 1000; //Milisegundos al día 
-        Long dias= ( f_entrada.getTime() - f_salida.getTime() )/ MILLSECS_PER_DAY;
+        double dias = (( f_salida.getTime() - f_entrada.getTime() )/ MILLSECS_PER_DAY);
         
         List<Tarifa> listTarifa = this.tarifaDAO.findAll();       
-        Double total = null;
+        Double total=0.0;
         
-        //listTarifa.get(i).getFecha_inicio().before(f_entrada) && listTarifa.get(i).getFecha_fin().after(f_salida)
         for(int i=0; i<listTarifa.size();i++){
-            if((f_entrada.after(listTarifa.get(i).getFecha_inicio()) || f_entrada.equals(listTarifa.get(i).getFecha_inicio()) ) && ( f_entrada.before(listTarifa.get(i).getFecha_fin()) || f_entrada.equals(listTarifa.get(i).getFecha_fin()) ) )
+            total = 0.00;
+            if((f_entrada.after(listTarifa.get(i).getFecha_inicio()) || f_entrada.equals(listTarifa.get(i).getFecha_inicio()) ) && f_salida.before(listTarifa.get(i).getFecha_fin() ) )
                 if(listTarifa.get(i).getTipo_habitacion().equals(tipo)){
-                    total = dias.doubleValue() * listTarifa.get(i).getCosto().byteValue();
+                    total = dias * listTarifa.get(i).getCosto().doubleValue();
                     if(desayuno){
-                        total += (listTarifa.get(i).getCosto_desayuno().byteValue() * dias.doubleValue());
-                        break;
+                        total += (listTarifa.get(i).getCosto_desayuno().doubleValue() * dias * tot_persona);
+                        //break;
                     }
-                    break;
+                    //break;
                 }
         }
         
-        total *= tot_persona;
+//        total *= tot_persona;
         
         return (new BigDecimal(total));
     }
@@ -135,7 +135,7 @@ public class ServicioHotel {
         
          }
         catch(Exception e)
-        { System.out.println("Error de parse de fechas!");
+        { System.out.println("Error!! Función conulta1");
                                              }
         
         return listResp;
