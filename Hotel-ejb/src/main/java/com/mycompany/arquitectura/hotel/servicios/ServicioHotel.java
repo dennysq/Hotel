@@ -13,6 +13,7 @@ import com.mycompany.arquitectura.hotel.model.HabitacionReserva;
 import com.mycompany.arquitectura.hotel.model.Tarifa;
 import com.mycompany.arquitectura.hotel.util.RespDisponibilidad;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +28,7 @@ import javax.ejb.Stateless;
 
 @LocalBean
 @Stateless
-public class HabitacionServicio {
+public class ServicioHotel { 
     
     @EJB
     private HabitacionDAO habitacionDAO;
@@ -35,6 +36,8 @@ public class HabitacionServicio {
     private HabitacionReservaDAO habitacionReservaDAO;
     @EJB
     private TarifaDAO tarifaDAO;
+    
+    private SimpleDateFormat sdf;
     
     
     public Habitacion obtenerPorId(Integer id) {
@@ -69,10 +72,9 @@ public class HabitacionServicio {
     
     
     public List<Habitacion> obtenerHabitacionesPorNumPersonas(List<Habitacion> habitaciones, Integer cant_personas){
-        for(int i=0;i<=habitaciones.size();i++){
+        for(int i=habitaciones.size()-1;i>=0;i--){
             if(habitaciones.get(i).getNum_personas() > cant_personas){
                 habitaciones.remove(i);
-                i--;
             }
         }
         return habitaciones;
@@ -104,23 +106,40 @@ public class HabitacionServicio {
         return habitaciones;
     }
     
+//      public static java.util.Date asDate(XMLGregorianCalendar xgc) {
+//        if (xgc == null) {
+//            return null;
+//        } else {
+//            return xgc.toGregorianCalendar().getTime();
+//        }
+//    }
     
-    public List<RespDisponibilidad> ConsultaDisponibilidadDeHabitaciones(Date f_entrada, Date f_salida,Integer tot_persona, Boolean desayuno){
+ 
+
+    public List<RespDisponibilidad> consulta1(String fechaEntrada, String fechaSalida,
+                                              Integer totalPersonas, Boolean incluyeDesayuno) {
         List<RespDisponibilidad> listResp = new ArrayList();
         List<Habitacion> habitaciones = new ArrayList();
+    
+        
+        sdf = new SimpleDateFormat("dd/MM/yyyy");
+        try{
+        Date f_entrada=sdf.parse(fechaEntrada);
+        Date f_salida=sdf.parse(fechaSalida);        
         habitaciones = this.obtenerHabitacionesSinReservaPorFecha(f_entrada, f_salida); //Habitaciones limitadas a la fecha disponible
-        habitaciones = this.obtenerHabitacionesPorNumPersonas(habitaciones, tot_persona);//Habitaciones con fecha disponible por el número de personas
+        habitaciones = this.obtenerHabitacionesPorNumPersonas(habitaciones, totalPersonas);//Habitaciones con fecha disponible por el número de personas
         for(int i=0;i<habitaciones.size();i++){
-            listResp.add(new RespDisponibilidad(habitaciones.get(i).getId(),this.calculoPrecios(habitaciones.get(i).getTipo(),f_entrada ,f_salida,tot_persona,desayuno),habitaciones.get(i).getTipo()));
+            listResp.add(new RespDisponibilidad(habitaciones.get(i).getId(),this.calculoPrecios(habitaciones.get(i).getTipo(),f_entrada ,f_salida,totalPersonas,incluyeDesayuno),habitaciones.get(i).getTipo()));
             
         }
         
-        //List<HabitacionReserva> reservasHabitaciones = this.habitacionReservaDAO.findAll();     
+         }
+        catch(Exception e)
+        { System.out.println("Error de parse de fechas!");
+                                             }
         
         return listResp;
     }
-    
-    
     
     
 }
