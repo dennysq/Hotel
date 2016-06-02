@@ -6,7 +6,9 @@
 package com.mycompany.ws;
 
 import com.mycompany.arquitectura.hotel.servicios.ServicioHotel;
+import com.mycompany.arquitectura.hotel.servicios.ServicioReserva;
 import com.mycompany.arquitectura.hotel.util.RespDisponibilidad;
+import com.mycompany.arquitectura.hotel.util.RespReserva;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.EJB;
@@ -24,6 +26,8 @@ import javax.ejb.Stateless;
 public class ServicioWebHotel {
 @EJB
     private ServicioHotel shotel;
+@EJB
+    private ServicioReserva sreserva;
 
     
     @WebMethod(operationName = "consultaDisponibilidadDeHabitaciones")
@@ -35,10 +39,17 @@ public class ServicioWebHotel {
 
     /**
      * Web service operation
+     * @param fechaEntrada
      */
     @WebMethod(operationName = "reservaHabitacionHotel")
-    public String reservaHabitacionHotel(@WebParam(name = "fechaEntrada") String fechaEntrada, @WebParam(name = "fechaSalida") String fechaSalida, @WebParam(name = "total_personas") Integer total_personas, @WebParam(name = "desayuno") Boolean desayuno, @WebParam(name = "precio") BigDecimal precio, @WebParam(name = "codigosHabitantes") List<String> codigosHabitantes) {
-        //TODO write your implementation code here:
-        return null;
+    public RespReserva reservaHabitacionHotel(@WebParam(name = "fechaEntrada") String fechaEntrada, 
+                                              @WebParam(name = "fechaSalida") String fechaSalida, 
+                                              @WebParam(name = "total_personas") Integer total_personas, 
+                                              @WebParam(name = "desayuno") Boolean desayuno, 
+                                              @WebParam(name = "precio") BigDecimal precio, 
+                                              @WebParam(name = "codigoHabitacion") Integer codigoHabitacion,
+                                              @WebParam(name = "nombreCliente") String nombreCliente,
+                                              @WebParam(name = "cedulaCliente") String cedulaCliente){
+        return sreserva.reservaHabitacionHotel(fechaEntrada, fechaSalida, total_personas, desayuno, precio, codigoHabitacion, nombreCliente, cedulaCliente);
     }
 }

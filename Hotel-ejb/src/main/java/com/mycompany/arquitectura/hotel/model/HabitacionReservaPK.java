@@ -23,8 +23,15 @@ public class HabitacionReservaPK implements Serializable{
      @Column(name = "codigo_r")
      private Integer codigo_r;
 
+    public HabitacionReservaPK(Integer codigo_hab, Integer codigo_r) {
+        this.codigo_hab = codigo_hab;
+        this.codigo_r = codigo_r;
+    }
+
     public HabitacionReservaPK() {
     }
+
+    
 
     public Integer getCodigo_hab() {
         return codigo_hab;

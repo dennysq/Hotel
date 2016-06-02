@@ -34,6 +34,9 @@ public class Reservacion implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codigo_r")
     private Integer id;
+    
+    @Column(name = "codigo_c")
+    private Integer codCliente;
 
     @Column(name = "fecha_entrada_r")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
@@ -58,8 +61,25 @@ public class Reservacion implements Serializable {
     @JoinColumn(name = "CODIGO_C", nullable = false, insertable = false, updatable = false)
     private Cliente cliente;
 
+    public Reservacion(Integer codCliente, Date fecha_entrada, Date fecha_salida) {
+        this.codCliente = codCliente;
+        this.fecha_entrada = fecha_entrada;
+        this.fecha_salida = fecha_salida;
+    }
+
     public Reservacion() {
     }
+
+    
+    public Integer getCodCliente() {
+        return codCliente;
+    }
+
+    public void setCodCliente(Integer codCliente) {
+        this.codCliente = codCliente;
+    }
+
+    
 
     public Integer getId() {
         return id;
@@ -144,7 +164,8 @@ public class Reservacion implements Serializable {
 
     @Override
     public String toString() {
-        return "Reservacion{" + "id=" + id + ", fecha_entrada=" + fecha_entrada + ", fecha_salida=" + fecha_salida + ", timestamp=" + timestamp + ", descuento=" + descuento + ", habitacion_reservas=" + habitacion_reservas + ", cliente=" + cliente + '}';
+        return "Reservacion{" + "id=" + id + ", codCliente=" + codCliente + ", fecha_entrada=" + fecha_entrada + ", fecha_salida=" + fecha_salida + ", timestamp=" + timestamp + ", descuento=" + descuento + ", habitacion_reservas=" + habitacion_reservas + ", cliente=" + cliente + '}';
     }
+
 
 }

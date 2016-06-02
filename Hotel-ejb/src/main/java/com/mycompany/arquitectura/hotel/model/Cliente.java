@@ -45,6 +45,14 @@ public class Cliente implements Serializable{
             fetch = FetchType.EAGER)
     List<Reservacion> reservaciones;
 
+    public Cliente(String identificacion, String nombres) {
+        this.identificacion = identificacion;
+        this.nombres = nombres;
+    }
+
+    
+    
+    
     public Cliente() {
     }
 

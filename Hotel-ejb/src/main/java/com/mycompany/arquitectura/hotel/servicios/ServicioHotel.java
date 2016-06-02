@@ -122,7 +122,7 @@ public class ServicioHotel {
         List<Habitacion> habitaciones = new ArrayList();
     
         
-        sdf = new SimpleDateFormat("dd/MM/yyyy");
+        sdf = new SimpleDateFormat("yyyy/MM/dd");
         try{
         Date f_entrada=sdf.parse(fechaEntrada);
         Date f_salida=sdf.parse(fechaSalida);        
@@ -135,7 +135,7 @@ public class ServicioHotel {
         
          }
         catch(Exception e)
-        { System.out.println("Error!! Función conulta1");
+        { System.out.println("Error!! Función consulta1");
                                              }
         
         return listResp;

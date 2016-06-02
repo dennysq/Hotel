@@ -28,6 +28,12 @@ public class HabitacionReserva implements Serializable{
     @EmbeddedId
     HabitacionReservaPK habitacionReservaPK;
     
+    @Column(name = "codigo_r")
+    private Integer codReservacion;
+    
+    @Column(name = "codigo_hab")
+    private Integer codHabitacion;
+    
     @Column(name = "num_personas")
     private Integer numero_personas;
     
