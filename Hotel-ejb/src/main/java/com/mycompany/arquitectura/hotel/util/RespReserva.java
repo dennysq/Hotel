@@ -20,9 +20,6 @@ public class RespReserva {
         this.codigoReserva = codigoReserva;
         this.mensajeError = mensajeError;
     }
-
-    public RespReserva() {
-    }
     
     
     public Boolean getEstado() {
