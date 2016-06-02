@@ -53,8 +53,7 @@ public class ServicioHotel {
         Double total=0.0;
         
         for(int i=0; i<listTarifa.size();i++){
-            total = 0.00;
-            if((f_entrada.after(listTarifa.get(i).getFecha_inicio()) || f_entrada.equals(listTarifa.get(i).getFecha_inicio()) ) && f_salida.before(listTarifa.get(i).getFecha_fin() ) )
+            if((f_entrada.after(listTarifa.get(i).getFecha_inicio()) || f_entrada.equals(listTarifa.get(i).getFecha_inicio()) ) && f_entrada.before(listTarifa.get(i).getFecha_fin() ) )
                 if(listTarifa.get(i).getTipo_habitacion().equals(tipo)){
                     total = dias * listTarifa.get(i).getCosto().doubleValue();
                     if(desayuno){
@@ -63,10 +62,7 @@ public class ServicioHotel {
                     }
                     //break;
                 }
-        }
-        
-//        total *= tot_persona;
-        
+        }        
         return (new BigDecimal(total));
     }
     
@@ -129,8 +125,7 @@ public class ServicioHotel {
         habitaciones = this.obtenerHabitacionesSinReservaPorFecha(f_entrada, f_salida); //Habitaciones limitadas a la fecha disponible
         habitaciones = this.obtenerHabitacionesPorNumPersonas(habitaciones, totalPersonas);//Habitaciones con fecha disponible por el número de personas
         for(int i=0;i<habitaciones.size();i++){
-            listResp.add(new RespDisponibilidad(habitaciones.get(i).getId(),this.calculoPrecios(habitaciones.get(i).getTipo(),f_entrada ,f_salida,totalPersonas,incluyeDesayuno),habitaciones.get(i).getTipo()));
-            
+            listResp.add(new RespDisponibilidad(habitaciones.get(i).getId(),this.calculoPrecios(habitaciones.get(i).getTipo(),f_entrada ,f_salida,totalPersonas,incluyeDesayuno),habitaciones.get(i).getTipo()));            
         }
         
          }

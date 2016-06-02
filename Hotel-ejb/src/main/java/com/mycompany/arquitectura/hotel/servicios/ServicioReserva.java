@@ -14,7 +14,7 @@ import com.mycompany.arquitectura.hotel.model.HabitacionReserva;
 import com.mycompany.arquitectura.hotel.model.HabitacionReservaPK;
 import com.mycompany.arquitectura.hotel.model.Reservacion;
 import com.mycompany.arquitectura.hotel.util.RespReserva;
-import com.persist.common.dao.Order;
+//import com.persist.common.dao.Order;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -79,7 +79,7 @@ public class ServicioReserva {
 
         Integer codReservacion = null;
         HabitacionReserva habReserva;
-        Boolean estado = false;
+       // Boolean estado = false;
 
         sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
@@ -100,7 +100,7 @@ public class ServicioReserva {
 
             respuesta.setEstado(false);
             respuesta.setMensajeError("Error: " + e.toString());
-            System.out.println("Error!");
+            //System.out.println("Error!");
         }
 
         return respuesta;
