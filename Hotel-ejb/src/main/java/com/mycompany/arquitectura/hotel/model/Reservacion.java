@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,7 +35,7 @@ public class Reservacion implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codigo_r")
     private Integer id;
-    
+
     @Column(name = "codigo_c")
     private Integer codCliente;
 
@@ -53,7 +54,7 @@ public class Reservacion implements Serializable {
     @Column(name = "descuento_r")
     private BigDecimal descuento;
 
-    @OneToMany(mappedBy = "reservacion", targetEntity = HabitacionReserva.class,
+    @OneToMany(mappedBy = "reservacion", targetEntity = HabitacionReserva.class, cascade = CascadeType.PERSIST,
             fetch = FetchType.EAGER)
     List<HabitacionReserva> habitacion_reservas;
 
@@ -70,7 +71,6 @@ public class Reservacion implements Serializable {
     public Reservacion() {
     }
 
-    
     public Integer getCodCliente() {
         return codCliente;
     }
@@ -78,8 +78,6 @@ public class Reservacion implements Serializable {
     public void setCodCliente(Integer codCliente) {
         this.codCliente = codCliente;
     }
-
-    
 
     public Integer getId() {
         return id;
@@ -164,8 +162,7 @@ public class Reservacion implements Serializable {
 
     @Override
     public String toString() {
-        return "Reservacion{" + "id=" + id + ", codCliente=" + codCliente + ", fecha_entrada=" + fecha_entrada + ", fecha_salida=" + fecha_salida + ", timestamp=" + timestamp + ", descuento=" + descuento + ", habitacion_reservas=" + habitacion_reservas + ", cliente=" + cliente + '}';
+        return "Reservacion{" + "id=" + id + ", codCliente=" + codCliente + ", fecha_entrada=" + fecha_entrada + ", fecha_salida=";
     }
-
 
 }

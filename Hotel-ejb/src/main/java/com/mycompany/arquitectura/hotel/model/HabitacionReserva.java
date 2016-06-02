@@ -28,10 +28,10 @@ public class HabitacionReserva implements Serializable{
     @EmbeddedId
     HabitacionReservaPK habitacionReservaPK;
     
-    @Column(name = "codigo_r")
+    @Column(name = "codigo_r",insertable = false,updatable = false)
     private Integer codReservacion;
     
-    @Column(name = "codigo_hab")
+    @Column(name = "codigo_hab",insertable = false,updatable = false)
     private Integer codHabitacion;
     
     @Column(name = "num_personas")
@@ -52,9 +52,7 @@ public class HabitacionReserva implements Serializable{
     @JoinColumn(name = "codigo_r", nullable = false,insertable = false,updatable = false)
     private Reservacion reservacion;
 
-    public HabitacionReserva() {
-    }
-
+  
     public HabitacionReservaPK getHabitacionReservaPK() {
         return habitacionReservaPK;
     }
@@ -65,6 +63,22 @@ public class HabitacionReserva implements Serializable{
 
     public Integer getNumero_personas() {
         return numero_personas;
+    }
+
+    public Integer getCodReservacion() {
+        return codReservacion;
+    }
+
+    public void setCodReservacion(Integer codReservacion) {
+        this.codReservacion = codReservacion;
+    }
+
+    public Integer getCodHabitacion() {
+        return codHabitacion;
+    }
+
+    public void setCodHabitacion(Integer codHabitacion) {
+        this.codHabitacion = codHabitacion;
     }
 
     public void setNumero_personas(Integer numero_personas) {
@@ -132,8 +146,10 @@ public class HabitacionReserva implements Serializable{
 
     @Override
     public String toString() {
-        return "HabitacionReserva{" + "habitacionReservaPK=" + habitacionReservaPK + ", numero_personas=" + numero_personas + ", servicio_desayuno=" + servicio_desayuno + ", precio_total=" + precio_total + ", habitacion=" + habitacion + ", reservacion=" + reservacion + '}';
+        return "HabitacionReserva{" + "habitacionReservaPK=" + habitacionReservaPK + ", codReservacion=" + codReservacion + ", codHabitacion=" + codHabitacion + ", numero_personas=" + numero_personas + ", servicio_desayuno=" + servicio_desayuno + ", precio_total=" + precio_total ;
     }
+
+ 
 
 
 }

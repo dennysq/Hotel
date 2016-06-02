@@ -14,7 +14,7 @@ import com.mycompany.arquitectura.hotel.model.HabitacionReserva;
 import com.mycompany.arquitectura.hotel.model.HabitacionReservaPK;
 import com.mycompany.arquitectura.hotel.model.Reservacion;
 import com.mycompany.arquitectura.hotel.util.RespReserva;
-import com.persist.common.dao.Order;
+//import com.persist.common.dao.Order;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -101,28 +101,44 @@ public class ServicioReserva {
             if (listCliente == null || listCliente.isEmpty()) {
                 ctemp.setNombres(nombCliente);
                 this.clienteDAO.insert(ctemp);
-                System.out.println("" + ctemp);
+                this.clienteDAO.flush();
 
             } else {
                 System.out.println("" + listCliente);
+                ctemp = listCliente.get(0);
             }
+            System.out.println("" + ctemp);
 
-//            codReservacion = this.guardarReservacion(ctemp.getId(), f_entrada, f_salida);
-//            habReserva = new HabitacionReserva();
-//            habReserva.setHabitacionReservaPK(new HabitacionReservaPK(codigoHabitacion, codReservacion));
-//            habReserva.setNumero_personas(total_personas);
-//            habReserva.setPrecio_total(precio);
-//            habReserva.setServicio_desayuno(desayuno);
-//            this.habitacionReservaDAO.insert(habReserva);
+            //codReservacion = this.guardarReservacion(ctemp.getId(), f_entrada, f_salida);
+            Reservacion re = new Reservacion();
+            re.setCliente(ctemp);
+            re.setCodCliente(ctemp.getId());
+            re.setFecha_entrada(f_entrada);
+            re.setFecha_salida(f_salida);
+            this.reservacionDAO.insert(re);
+            this.reservacionDAO.flush();
+            HabitacionReservaPK pk = new HabitacionReservaPK();
+            pk.setCodigo_hab(codigoHabitacion);
+            pk.setCodigo_r(re.getId());
+            habReserva = new HabitacionReserva();
+            habReserva.setHabitacionReservaPK(pk);
+            habReserva.setNumero_personas(total_personas);
+            habReserva.setPrecio_total(precio);
+            habReserva.setServicio_desayuno(desayuno);
+            this.habitacionReservaDAO.insert(habReserva);
+//            this.habitacionReservaDAO.flush();
             estado = true;
+            respuesta = new RespReserva(estado,
+                    re.getId(),
+                    "");
         } catch (Exception e) {
             estado = false;
+            respuesta = new RespReserva(estado,
+                    -1,
+                    mensaje);
             System.out.println("Error!" + e.toString());
         }
 
-        respuesta = new RespReserva(estado,
-                codReservacion,
-                mensaje);
         return respuesta;
     }
 
