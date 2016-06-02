@@ -79,9 +79,9 @@ public class ServicioReserva {
     }
 
     public RespReserva reservaHabitacionHotel(String fechaEntrada, String fechaSalida,
-            Integer total_personas, Boolean desayuno,
-            BigDecimal precio, Integer codigoHabitacion,
-            String nombCliente, String cedulaCliente) {
+                                            Integer total_personas, Boolean desayuno,
+                                            BigDecimal precio, Integer codigoHabitacion,
+                                            String nombCliente, String cedulaCliente) {
         RespReserva respuesta = null;
         Integer codCliente;
         Integer codReservacion = null;
@@ -90,7 +90,7 @@ public class ServicioReserva {
 
         sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            Date f_entrada = sdf.parse(fechaEntrada);
+            Date f_entrada =sdf.parse(fechaEntrada);
             Date f_salida = sdf.parse(fechaSalida);
             List<Cliente> listCliente;
             Cliente ctemp = new Cliente();
@@ -113,8 +113,10 @@ public class ServicioReserva {
             Reservacion re = new Reservacion();
             re.setCliente(ctemp);
             re.setCodCliente(ctemp.getId());
-            re.setFecha_entrada(f_entrada);
-            re.setFecha_salida(f_salida);
+            java.sql.Date sqlDateEntrada = new java.sql.Date(f_entrada.getTime());
+            re.setFecha_entrada(sqlDateEntrada);
+            java.sql.Date sqlDateSalida = new java.sql.Date(f_salida.getTime());
+            re.setFecha_salida(sqlDateSalida);
             this.reservacionDAO.insert(re);
             this.reservacionDAO.flush();
             HabitacionReservaPK pk = new HabitacionReservaPK();
@@ -130,9 +132,10 @@ public class ServicioReserva {
             estado = true;
             respuesta = new RespReserva(estado,
                     re.getId(),
-                    "");
+                    "¡Reserva realizada exitosamente!");
         } catch (Exception e) {
-            estado = false;
+            //estado = false;
+            mensaje= " " + e;
             respuesta = new RespReserva(estado,
                     -1,
                     mensaje);

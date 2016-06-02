@@ -119,7 +119,7 @@ public class ServicioHotel {
                 listResp.add(new RespDisponibilidad(habitaciones.get(i).getId(), this.calculoPrecios(habitaciones.get(i).getTipo(), f_entrada, f_salida, totalPersonas, incluyeDesayuno), habitaciones.get(i).getTipo()));
             }
         } catch (ParseException e) {
-            System.out.println("Eroor:" + e);
+            System.out.println("Error:" + e);
         }
 
         return listResp;
