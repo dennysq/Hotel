@@ -23,7 +23,6 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-
 /**
  *
  * @author LENOVO
@@ -31,8 +30,8 @@ import javax.ejb.Stateless;
 @LocalBean
 @Stateless
 public class ServicioReserva {
-    
-     @EJB
+
+    @EJB
     private HabitacionDAO habitacionDAO;
     @EJB
     private HabitacionReservaDAO habitacionReservaDAO;
@@ -40,73 +39,91 @@ public class ServicioReserva {
     private ReservacionDAO reservacionDAO;
     @EJB
     private ClienteDAO clienteDAO;
-    
+
     private String mensaje;
-    
+
     private SimpleDateFormat sdf;
-    
-    public Integer guardarReservacion(Integer codCliente, Date f_entrada, Date f_salida){
-        Reservacion re = new Reservacion(codCliente,f_entrada,f_salida);
+
+    public Integer guardarReservacion(Integer codCliente, Date f_entrada, Date f_salida) {
+        System.out.println("codCLiente: " + codCliente);
+        Cliente temp = this.clienteDAO.findById(codCliente, false);
+        System.out.println("" + temp);
+        Reservacion re = new Reservacion();
+        re.setCliente(temp);
+        re.setCodCliente(codCliente);
+        re.setFecha_entrada(f_entrada);
+        re.setFecha_salida(f_salida);
         this.reservacionDAO.insert(re);
-        List<Reservacion> listReservacion;
-        listReservacion = this.reservacionDAO.findO(re, f_entrada.toString());//NO SÉ SI FUNCIONA
-        
-        return listReservacion.get(0).getId();
+        return re.getId();
     }
-    
-    public Integer verificacionCliente(String nombCliente, String cedulaCliente){
+
+    public Cliente verificacionCliente(String nombCliente, String cedulaCliente) {
         List<Cliente> listCliente;
         Cliente c = new Cliente();
         c.setIdentificacion(cedulaCliente);
-        listCliente = this.clienteDAO.findO(c, Order.ascendente(nombCliente));
-        
-        if(listCliente == null){
+        listCliente = this.clienteDAO.find(c);
+        //try {
+        if (listCliente == null || listCliente.isEmpty()) {
             c.setNombres(nombCliente);
             this.clienteDAO.insert(c);
             this.mensaje = "Condición cliente: Nuevo.";
-            return listCliente.get(listCliente.size()-1).getId();
-        }
-        else{
+            System.out.println("" + c);
+            return c;
+        } else {
             this.mensaje = "Condición cliente: Antiguo";
-            return listCliente.get(0).getId();    
+            return listCliente.get(0);
         }
+//        } catch (Exception e) {
+//            return null;
+//        }
     }
-    
-    public RespReserva reservaHabitacionHotel(String fechaEntrada, String fechaSalida, 
-                                              Integer total_personas, Boolean desayuno, 
-                                              BigDecimal precio, Integer codigoHabitacion, 
-                                              String nombCliente, String cedulaCliente) {
-        RespReserva respuesta=null;
+
+    public RespReserva reservaHabitacionHotel(String fechaEntrada, String fechaSalida,
+            Integer total_personas, Boolean desayuno,
+            BigDecimal precio, Integer codigoHabitacion,
+            String nombCliente, String cedulaCliente) {
+        RespReserva respuesta = null;
         Integer codCliente;
-        Integer codReservacion= null;
+        Integer codReservacion = null;
         HabitacionReserva habReserva;
-        Boolean estado=false;     
-        
-        sdf = new SimpleDateFormat("yyy/MM/dd");
-        try{
-        Date f_entrada=sdf.parse(fechaEntrada);
-        Date f_salida=sdf.parse(fechaSalida);
-        
-        codCliente = this.verificacionCliente(nombCliente, cedulaCliente);
-        codReservacion = this.guardarReservacion(codCliente, f_entrada, f_salida);
-        habReserva = new HabitacionReserva();
-        habReserva.setHabitacionReservaPK(new HabitacionReservaPK(codigoHabitacion,codReservacion));
-        habReserva.setNumero_personas(total_personas);
-        habReserva.setPrecio_total(precio);
-        habReserva.setServicio_desayuno(desayuno);
-        this.habitacionReservaDAO.insert(habReserva);
-        estado = true;
-         }
-        catch(Exception e)
-        { 
+        Boolean estado = false;
+
+        sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date f_entrada = sdf.parse(fechaEntrada);
+            Date f_salida = sdf.parse(fechaSalida);
+            List<Cliente> listCliente;
+            Cliente ctemp = new Cliente();
+            ctemp.setIdentificacion(cedulaCliente);
+            listCliente = this.clienteDAO.find(ctemp);
+            //try {
+
+            if (listCliente == null || listCliente.isEmpty()) {
+                ctemp.setNombres(nombCliente);
+                this.clienteDAO.insert(ctemp);
+                System.out.println("" + ctemp);
+
+            } else {
+                System.out.println("" + listCliente);
+            }
+
+//            codReservacion = this.guardarReservacion(ctemp.getId(), f_entrada, f_salida);
+//            habReserva = new HabitacionReserva();
+//            habReserva.setHabitacionReservaPK(new HabitacionReservaPK(codigoHabitacion, codReservacion));
+//            habReserva.setNumero_personas(total_personas);
+//            habReserva.setPrecio_total(precio);
+//            habReserva.setServicio_desayuno(desayuno);
+//            this.habitacionReservaDAO.insert(habReserva);
+            estado = true;
+        } catch (Exception e) {
             estado = false;
-            System.out.println("Error!");
+            System.out.println("Error!" + e.toString());
         }
-                                            
-        respuesta=new RespReserva(estado,
-                                  codReservacion,
-                                  mensaje);
+
+        respuesta = new RespReserva(estado,
+                codReservacion,
+                mensaje);
         return respuesta;
     }
-    
+
 }

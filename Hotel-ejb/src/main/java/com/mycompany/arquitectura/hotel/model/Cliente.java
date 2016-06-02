@@ -21,50 +21,27 @@ import javax.persistence.Table;
  *
  * @author LENOVO
  */
-
 @Entity
 @Table(name = "CLIENTE")
-public class Cliente implements Serializable{
-    
+public class Cliente implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codigo_c")
     Integer id;
-    
+
     @Column(name = "identificacion_c")
     private String identificacion;
-    
+
     @Column(name = "nombres_c")
     private String nombres;
-    
+
     @Column(name = "num_tarjeta_c")
     private String num_tarjeta;
-    
-    @OneToMany
-        (mappedBy = "cliente", targetEntity = Reservacion.class,
+
+    @OneToMany(mappedBy = "cliente", targetEntity = Reservacion.class,
             fetch = FetchType.EAGER)
     List<Reservacion> reservaciones;
-
-    public Cliente(String identificacion, String nombres) {
-        this.identificacion = identificacion;
-        this.nombres = nombres;
-    }
-
-    
-    
-    
-    public Cliente() {
-    }
-
-    public Cliente(Integer id, String identificacion, String nombres, String num_tarjeta, List<Reservacion> reservaciones) {
-        this.id = id;
-        this.identificacion = identificacion;
-        this.nombres = nombres;
-        this.num_tarjeta = num_tarjeta;
-        this.reservaciones = reservaciones;
-    }
-    
-    
 
     public List<Reservacion> getReservaciones() {
         return reservaciones;
@@ -136,6 +113,4 @@ public class Cliente implements Serializable{
         return "Cliente{" + "id=" + id + ", identificacion=" + identificacion + ", nombres=" + nombres + ", num_tarjeta=" + num_tarjeta + ", reservaciones=" + reservaciones + '}';
     }
 
-    
-    
 }

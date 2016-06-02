@@ -15,41 +15,40 @@ import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
-import javax.ejb.Stateless;
 
 /**
  *
- * @author LENOVO
+ * @author Dennys
  */
-@WebService(serviceName = "ServicioWebHotel")
-@Stateless()
-public class ServicioWebHotel {
-@EJB
+@WebService(serviceName = "HotelWS")
+public class HotelWS {
+
+    @EJB
     private ServicioHotel shotel;
-@EJB
+    @EJB
     private ServicioReserva sreserva;
 
-    
     @WebMethod(operationName = "consultaDisponibilidadDeHabitaciones")
     public List<RespDisponibilidad> consultaDisponibilidadDeHabitaciones(@WebParam(name = "fechaEntrada") String fechaEntrada, @WebParam(name = "fechaSalida") String fechaSalida,
-                                                                         @WebParam(name = "totalPersonas") Integer totalPersonas, @WebParam(name = "incluyeDesayuno") Boolean incluyeDesayuno) {
-        System.out.println("fEntrada: "+fechaEntrada);
+            @WebParam(name = "totalPersonas") Integer totalPersonas, @WebParam(name = "incluyeDesayuno") Boolean incluyeDesayuno) {
+        System.out.println("fEntrada: " + fechaEntrada);
         return shotel.consulta1(fechaEntrada, fechaSalida, totalPersonas, incluyeDesayuno);
     }
 
     /**
      * Web service operation
+     *
      * @param fechaEntrada
      */
     @WebMethod(operationName = "reservaHabitacionHotel")
-    public RespReserva reservaHabitacionHotel(@WebParam(name = "fechaEntrada") String fechaEntrada, 
-                                              @WebParam(name = "fechaSalida") String fechaSalida, 
-                                              @WebParam(name = "total_personas") Integer total_personas, 
-                                              @WebParam(name = "desayuno") Boolean desayuno, 
-                                              @WebParam(name = "precio") BigDecimal precio, 
-                                              @WebParam(name = "codigoHabitacion") Integer codigoHabitacion,
-                                              @WebParam(name = "nombreCliente") String nombreCliente,
-                                              @WebParam(name = "cedulaCliente") String cedulaCliente){
+    public RespReserva reservaHabitacionHotel(@WebParam(name = "fechaEntrada") String fechaEntrada,
+            @WebParam(name = "fechaSalida") String fechaSalida,
+            @WebParam(name = "total_personas") Integer total_personas,
+            @WebParam(name = "desayuno") Boolean desayuno,
+            @WebParam(name = "precio") BigDecimal precio,
+            @WebParam(name = "codigoHabitacion") Integer codigoHabitacion,
+            @WebParam(name = "nombreCliente") String nombreCliente,
+            @WebParam(name = "cedulaCliente") String cedulaCliente) {
         return sreserva.reservaHabitacionHotel(fechaEntrada, fechaSalida, total_personas, desayuno, precio, codigoHabitacion, nombreCliente, cedulaCliente);
     }
 }
